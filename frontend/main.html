@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+	<style>
+		nav>a{
+			width: 100px;
+			height: 50px;
+			text-align: center;
+			color: red;
+			background: darkblue;
+		}
+		
+		div{
+			color: blue;
+		}
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.wrap{
+			width: 500px;
+			height: 400px;
+			margin: 0 auto;
+			
+		}
+	</style>
+	
+</head>
+<body>
+	
+	<div class="wrap">
+		<nav>
+			<a href="index.html">首页</a>
+			<a href="main.html?id=b">新闻</a>
+			<a href="#">客服中心</a>
+		</nav>
+		<main>
+			
+		</main>
+	</div>
+	
+	
+	<script type="text/javascript">
+
+	var url=window.location.href;
+	var	id=url.split('?')[1].split('=')[1]
+	
+	console.log(id)
+	
+		if(id=='b'){
+			$.ajax({
+				url:'http://localhost:3000/item',
+				type:'get',
+				success:function(e){
+					for(var i in e){
+						console.log(e)
+						$('main').append("<a href='main.html?id="+e[i].id+"'>"+e[i].title+"</a>")
+					}
+				}
+			})
+		}
+		else{
+			
+		$.ajax({
+			type:"POST",
+			url:"http://localhost:3000/item/detail",
+			data:{abc:id},
+			success:function(e){
+				console.log(e),
+				$("main").append("<div>"+e[0].detail+"</div>")
+			}
+		});
+		
+	
+		}
+</script>
+
+</body>
+</html>
